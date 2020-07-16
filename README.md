@@ -13,7 +13,7 @@ We will try to keep this repo up-to-date. For now, here are the apps currently i
 * OAuth - Forward Authentication (Google OAuth 2.0)
 * Authelia - Private Forward Authentication (Default)
 * Portainer - Container Management
-* Organizr - Unified Frontend
+* NextCloud - 
 * Heimdall - Unified Frontend Alternative
 
 # DATABASE
@@ -21,3 +21,16 @@ We will try to keep this repo up-to-date. For now, here are the apps currently i
 
 # DOWNLOADERS
 * qBitTorrent - Torrent Downloader
+
+# MEDIA SERVER
+* Jellyfin - Media Server
+
+# SYSTEM
+* Firefox - Web Broswer
+* Glances - System Information
+* Dozzle - Docker logs viewer
+* VS Code Server - Code Editor
+Logarr - Log Management (OBSOLETE)
+Monitorr - Webfront to display the status of any webapp or service (OBSOLETE)
+* Cloud Commander - Web File Manager 
+Cloud9 - Cloud IDE (OBSOLETE)
