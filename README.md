@@ -19,3 +19,5 @@ We will try to keep this repo up-to-date. For now, here are the apps currently i
 # DATABASE
 * MariaDB - MySQL Database
 
+# DOWNLOADERS
+* qBitTorrent - Torrent Downloader
