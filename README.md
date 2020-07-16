@@ -15,3 +15,7 @@ We will try to keep this repo up-to-date. For now, here are the apps currently i
 * Portainer - Container Management
 * Organizr - Unified Frontend
 * Heimdall - Unified Frontend Alternative
+
+# DATABASE
+* MariaDB - MySQL Database
+
