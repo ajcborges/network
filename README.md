@@ -10,7 +10,7 @@ This is the updated docker-compose repo of all the media and home server apps de
 
 We will try to keep this repo up-to-date. For now, here are the apps currently included in our stack:
 
-# FRONTENDS
+# FRONT-ENDS
 
 - Traefik - Reverse Proxy
 - OAuth - Forward Authentication (Google OAuth 2.0)
