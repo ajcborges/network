@@ -1,0 +1,11 @@
+
+########################### DOZZLE VARIABLES ###########################
+
+### DOMAIN NAME CONFIGURATION
+DOMAINNAME=cedeno.me
+
+
+### DOMAIN NAME CONFIGURATION
+DZL_LEVEL=info
+DZL_TAILSIZE=300
+DZL_FILTER="status=running"
