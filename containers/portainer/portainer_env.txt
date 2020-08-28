@@ -1,0 +1,14 @@
+
+########################### PORTAINER VARIABLE ###########################
+
+### TIMEZONE USED BY CONTAINER
+TZ="<TZ>"
+
+
+### FILEPATH FOR DATA & CONFIG USED BY CONTAINERS
+CFGDIR="/home/<UDSERNAME>/docker/config"
+
+
+### DOMAIN NAME CONFIGURATION
+DOMAINNAME=<DOMAINNAME>
+
