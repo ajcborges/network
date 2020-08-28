@@ -21,11 +21,15 @@ services:
       - "traefik.http.routers.bitwarden-rtr.rule=Host(`pw.$DOMAINNAME`)"
       - "traefik.http.routers.bitwarden-rtr.tls=true"
       ## note: Middlewares
-      ## ! To enable Authentication, comment out ONLY one of the below lines.
-      ## note: Basic Authentication
-      # - "traefik.http.routers.bitwarden-rtr.middlewares=chain-basic-auth@file"
+      ## ! To enable Authentication wanted, comment out ONLY one of the below lines.
       ## note: No Authentication
-      - "traefik.http.routers.bitwarden-rtr.middlewares=chain-no-auth@file"
+      # - "traefik.http.routers.bitwarden-rtr.middlewares=chain-no-auth@file"
+      ## note: Basic Authentication
+      - "traefik.http.routers.bitwarden-rtr.middlewares=chain-basic-auth@file"
+      ## note: Google OAuth Authentication
+      # - "traefik.http.routers.bitwarden-rtr.middlewares=chain-oauth@file"
+      ## note: Authelia Authentication
+      # - "traefik.http.routers.bitwarden-rtr.middlewares=chain-authelia@file"
       ## note: HTTP Services
       - "traefik.http.routers.bitwarden-rtr.service=bitwarden-svc"
       - "traefik.http.services.bitwarden-svc.loadbalancer.server.port=80"
