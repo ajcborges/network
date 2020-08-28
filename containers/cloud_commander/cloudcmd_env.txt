@@ -1,0 +1,18 @@
+
+########################### BITWARDEN VARIABLES ###########################
+
+### TIMEZONE USED BY CONTAINER
+TZ="<TZ>"
+
+
+### FILEPATH FOR DATA & CONFIG USED BY CONTAINERS
+CFGDIR="/home/<username>/docker/config"
+DATDIR="/home/<username>/docker/data"
+# Below variables are optionals.
+DSK1DIR="/home/<username>/docker/internal-disk/"
+DSK2DIR="/home/<username>/docker/external-disk/"
+
+
+### DOMAIN NAME CONFIGURATION
+DOMAINNAME=<DOMAINNAME>
+
