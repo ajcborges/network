@@ -1,0 +1,23 @@
+version: "3.7"
+
+services:
+  #  * MariaDB Container *  #
+  mariadb:
+    image: linuxserver/mariadb:latest
+    container_name: mariadb
+    restart: always
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - t2_proxy:
+          - ipv4_address: 192.168.90.250
+    environment:
+      # ! to find a user's UID or GID in *nix,
+      # ! use the "id" command.
+      - PUID=$PUID # ! ex: id -u <username>
+      - PGID=$PGID # ! ex: id -g <username>
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+    volumes:
+      - $CFGDIR/mariadb/data:/config
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
