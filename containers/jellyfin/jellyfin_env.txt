@@ -1,5 +1,5 @@
 
-########################### HEIMDALL VARIABLES ###########################
+########################### JELLYFIN VARIABLES ###########################
 
 ### USER &  GROUP IDs USED BY CONTAINERS
 # To find a user's UID or GID in *nix,  use the "id" command. 
