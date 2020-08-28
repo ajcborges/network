@@ -1,0 +1,19 @@
+
+########################### CONFLUENCE VARIABLES ###########################
+
+### TIMEZONE USED BY CONTAINER
+TZ="<TZ>"
+
+
+### FILEPATH FOR DATA & CONFIG USED BY CONTAINERS
+CFGDIR="/home/<username>/docker/config"
+
+
+### DOMAIN NAME CONFIGURATION
+DOMAINNAME=<DOMAINNAME>
+
+
+### PORT CONFIGURATION USED BY CONTAINER
+CONFLUENCE_PORT_1=8090                              # Confluence port nro 1
+CONFLUENCE_PORT_2=8091                              # Confluence port nro 2
+

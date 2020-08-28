@@ -1,0 +1,40 @@
+version: "3.7"
+
+services:
+  #  * Confluence Container *  #
+  confluence:
+    container_name: concluence
+    image: atlassian/confluence-server
+    restart: unless-stopped
+    networks:
+      - t2_proxy
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - "$CONFLUENCE_PORT_1:8090"
+      - "$CONFLUENCE_PORT_2:8091"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - $CFGDIR/confluence/data:/var/atlassian/application-data/confluence
+    environment:
+      - TZ=$TZ
+      - JVM_SUPPORT_RECOMMENDED_ARGS=-Djavax.net.ssl.trustStore=/var/atlassian/application-data/confluence/cacerts
+    labels:
+      - "traefik.enable=true"
+      ## note: HTTP Routers Section
+      - "traefik.http.routers.confluence-rtr.entrypoints=https"
+      - "traefik.http.routers.confluence-rtr.rule=Host(`concluence.$DOMAINNAME`)"
+      - "traefik.http.routers.confluence-rtr.tls=true"
+      ## note: Middlewares Section
+      # ! To enable Authentication wanted, comment out ONLY one of the below lines.
+      ## note: No Authentication
+      # - "traefik.http.routers.confluence-rtr.middlewares=chain-no-auth@file" # No Authentication
+      ## note: Basic Authentication
+      - "traefik.http.routers.confluence-rtr.middlewares=chain-basic-auth@file" # Basic Authentication
+      ## note: google OAuth Authentication
+      # - "traefik.http.routers.confluence-rtr.middlewares=chain-oauth@file" # Google OAuth 2.0
+      ## note: Authelia Authentication
+      # - "traefik.http.routers.confluence-rtr.middlewares=chain-authelia@file" # Authelia
+      ## note: HTTP Services Section
+      - "traefik.http.routers.confluence-rtr.service=confluence-svc"
+      - "traefik.http.services.confluence-svc.loadbalancer.server.port=8090"
