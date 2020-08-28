@@ -1,8 +1,6 @@
 version: "3.7"
-
-###################  
-# Cloud Commander #
-################### 
+services:
+  #  * Cloud Commander Container *  #
   cloudcmd:
     container_name: cloudcmd
     image: coderaiser/cloudcmd
@@ -14,10 +12,10 @@ version: "3.7"
     volumes:
       - ~:/root
       - /:/mnt/fs
-      - $DSK1DIR:/internal-disk   # ! optional parameter
-      - $DSK2DIR:/external-disk   # ! optional parameter
-      - $DATDIR:/docker-disk      # note: contains container data files
-      - $CFGDIR:/docker-config    # note: contains container config files
+      - $DSK1DIR:/internal-disk # ! optional parameter
+      - $DSK2DIR:/external-disk # ! optional parameter
+      - $DATDIR:/docker-disk # note: contains container data files
+      - $CFGDIR:/docker-config # note: contains container config files
     environment:
       - TZ=$TZ
     labels:
@@ -30,12 +28,12 @@ version: "3.7"
       ## ! To enable Authentication wanted, comment out ONLY one of the below lines.
       ## note: No Authentication
       # - "traefik.http.routers.cloudcmd-rtr.middlewares=chain-no-auth@file"
-      ## note: Basic Authentication      
-      - "traefik.http.routers.cloudcmd-rtr.middlewares=chain-basic-auth@file" 
-      ## note: google OAuth Authentication 
-      # - "traefik.http.routers.cloudcmd-rtr.middlewares=chain-oauth@file" 
-      ## note: Authelia Authentication 
-      # - "traefik.http.routers.cloudcmd-rtr.middlewares=chain-authelia@file" 
+      ## note: Basic Authentication
+      - "traefik.http.routers.cloudcmd-rtr.middlewares=chain-basic-auth@file"
+      ## note: google OAuth Authentication
+      # - "traefik.http.routers.cloudcmd-rtr.middlewares=chain-oauth@file"
+      ## note: Authelia Authentication
+      # - "traefik.http.routers.cloudcmd-rtr.middlewares=chain-authelia@file"
       ## note: HTTP Services
       - "traefik.http.routers.cloudcmd-rtr.service=cloudcmd-svc"
       - "traefik.http.services.cloudcmd-svc.loadbalancer.server.port=8000"
