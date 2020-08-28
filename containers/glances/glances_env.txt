@@ -1,0 +1,7 @@
+
+########################### GLANCES VARIABLE ###########################
+
+
+### DOMAIN NAME CONFIGURATION
+DOMAINNAME=<DOMAINNAME>
+

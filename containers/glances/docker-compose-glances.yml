@@ -1,0 +1,39 @@
+version: "3.7"
+
+services:
+  #  * Glances Container *  #
+  glances:
+    image: nicolargo/glances:latest
+    container_name: glances
+    restart: unless-stopped
+    privileged: true
+    networks:
+      - t2_proxy
+    security_opt:
+      - no-new-privileges:true
+    pid: host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      GLANCES_OPT: "-w"
+    labels:
+      - "traefik.enable=true"
+      ## note: HTTP Routers Section
+      - "traefik.http.routers.glances-rtr.entrypoints=https"
+      - "traefik.http.routers.glances-rtr.rule=Host(`glances.$DOMAINNAME`)"
+      - "traefik.http.routers.glances-rtr.tls=true"
+
+      ## note: Middlewares Section
+      # ! To enable Authentication wanted, comment out ONLY one of the below lines.
+      ## note: No Authentication
+      # - "traefik.http.routers.glances-rtr.middlewares=chain-no-auth@file"
+      ## note: Basic Authentication
+      - "traefik.http.routers.glances-rtr.middlewares=chain-basic-auth@file"
+      ## note: Google OAuth Authentication
+      # - "traefik.http.routers.glances-rtr.middlewares=chain-oauth@file"
+      ## note: Authelia Authentication
+      # - "traefik.http.routers.glances-rtr.middlewares=chain-authelia@file"
+
+      ## note: HTTP Services Section
+      - "traefik.http.routers.glances-rtr.service=glances-svc"
+      - "traefik.http.services.glances-svc.loadbalancer.server.port=61208"
