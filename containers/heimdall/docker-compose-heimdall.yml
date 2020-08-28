@@ -1,0 +1,41 @@
+version: "3.7"
+
+services:
+  #  * Heimdall Container *  #
+  heimdall:
+    container_name: heimdall
+    image: linuxserver/heimdall:latest
+    restart: unless-stopped
+    networks:
+      - t2_proxy
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - $CFGDIR/heimdall:/config
+    environment:
+      # ! to find a user's UID or GID in *nix,
+      # ! use the "id" command.
+      - PUID=$PUID # ! ex: id -u <username>
+      - PGID=$PGID # ! ex: id -g <username>
+      - TZ=$TZ
+    labels:
+      - "traefik.enable=true"
+      ## note: HTTP Routers Section
+      - "traefik.http.routers.heimdall-rtr.entrypoints=https"
+      - "traefik.http.routers.heimdall-rtr.rule=Host(`heimdall.$DOMAINNAME`)"
+      - "traefik.http.routers.heimdall-rtr.tls=true"
+
+      ## note: Middlewares Section
+      # ! To enable Authentication wanted, comment out ONLY one of the below lines.
+      ## note: No Authentication
+      # - "traefik.http.routers.glances-rtr.middlewares=chain-no-auth@file"
+      ## note: Basic Authentication
+      - "traefik.http.routers.glances-rtr.middlewares=chain-basic-auth@file"
+      ## note: Google OAuth Authentication
+      # - "traefik.http.routers.glances-rtr.middlewares=chain-oauth@file"
+      ## note: Authelia Authentication
+      # - "traefik.http.routers.glances-rtr.middlewares=chain-authelia@file"
+
+      ## note HTTP Services Section
+      - "traefik.http.routers.heimdall-rtr.service=heimdall-svc"
+      - "traefik.http.services.heimdall-svc.loadbalancer.server.port=80"
