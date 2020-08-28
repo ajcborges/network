@@ -1,0 +1,10 @@
+
+########################### VARIABLE ###########################
+
+### FILEPATH FOR DATA & CONFIG USED BY CONTAINERS
+CFGDIR="/home/ajcborges/docker/config"
+
+
+### DOMAIN NAME CONFIGURATION
+DOMAINNAME=cedeno.me
+

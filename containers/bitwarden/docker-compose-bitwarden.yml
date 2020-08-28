@@ -1,0 +1,31 @@
+version: "3.7"
+
+services:
+  ###########################################
+  # Bitwarden - password management service #
+  ###########################################
+  bitwarden:
+    image: bitwardenrs/server:latest
+    container_name: bitwarden
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - t2_proxy
+    volumes:
+      - $CFGDIR/bitwarden:/data
+    labels:
+      - "traefik.enable=true"
+      ## note: HTTP Routers
+      - "traefik.http.routers.bitwarden-rtr.entrypoints=https"
+      - "traefik.http.routers.bitwarden-rtr.rule=Host(`pw.$DOMAINNAME`)"
+      - "traefik.http.routers.bitwarden-rtr.tls=true"
+      ## note: Middlewares
+      ## ! To enable Authentication, comment out ONLY one of the below lines.
+      ## note: Basic Authentication
+      # - "traefik.http.routers.bitwarden-rtr.middlewares=chain-basic-auth@file"
+      ## note: No Authentication
+      - "traefik.http.routers.bitwarden-rtr.middlewares=chain-no-auth@file"
+      ## note: HTTP Services
+      - "traefik.http.routers.bitwarden-rtr.service=bitwarden-svc"
+      - "traefik.http.services.bitwarden-svc.loadbalancer.server.port=80"
