@@ -1,0 +1,20 @@
+
+########################### QBITTORRENT VARIABLES ###########################
+
+### USER &  GROUP IDs USED BY CONTAINERS
+# To find a user's UID or GID in *nix,  use the "id" command. 
+PUID=<PUID>           # ex: id -u <username>
+PGID=<PGID>           # ex: id -g <username>
+
+
+### TIMEZONE USED BY CONTAINER
+TZ="<TZ>"
+
+
+### FILEPATH FOR DATA & CONFIG USED BY CONTAINERS
+CFGDIR="/home/<USERNAME>/docker/config"
+DATDIR="/home/<USERNAME>/docker/data"
+
+
+### DOMAIN NAME CONFIGURATION
+DOMAINNAME=<DOMAINNAME>
