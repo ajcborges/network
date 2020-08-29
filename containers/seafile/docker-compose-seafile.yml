@@ -1,0 +1,54 @@
+version: "3.7"
+
+services:
+  # * SeaFile Container * #
+  seafile:
+    image: seafileltd/seafile-mc:latest
+    container_name: seafile
+    volumes:
+      ## note: Requested, specifies the path to Seafile data persistent store.
+      - $DATDIR/seafile:/shared
+    environment:
+      - DB_HOST=$DB_HOST
+      ## note:  Requested, the value should be root's password of MySQL service.
+      - DB_ROOT_PASSWD=$DB_ROOT_PASSWD
+      ## note:  Optional, default is UTC. Should be uncomment and set to your local time zone.
+
+      - TIME_ZONE=$TZ
+      ## note: Specifies Seafile admin user, default is 'me@example.com'.
+
+      - SEAFILE_ADMIN_EMAIL=$SEAFILE_ADMIN_EMAIL
+      ## note: Specifies Seafile admin password, default is 'asecret'.
+      - SEAFILE_ADMIN_PASSWORD=$SEAFILE_ADMIN_PASSWORD
+      ## note: # Whether to use https or not.
+      - SEAFILE_SERVER_LETSENCRYPT=false
+      ## note: # Specifies your host name if https is enabled.
+      - SEAFILE_SERVER_HOSTNAME=$SEAFILE_SERVER_HOSTNAME
+    depends_on:
+      ## note: # Specifies container dependencies.
+      ## ! Below containers MUST be installed and running
+      - mariadb
+      - memcached
+    networks:
+      - t2_proxy
+    labels:
+      - "traefik.enable=true"
+      ## note: HTTP Routers Section
+      - "traefik.http.routers.seafile-rtr.entrypoints=https"
+      - "traefik.http.routers.seafile-rtr.rule=Host(`repo.$DOMAINNAME`)"
+      - "traefik.http.routers.seafile-rtr.tls=true"
+
+      ## note: Middlewares Section
+      # ! To enable Authentication wanted, comment out ONLY one of the below lines.
+      ## note: No Authentication
+      - "traefik.http.routers.seafile-rtr.middlewares=chain-no-auth@file"
+      ## note: Basic Authentication
+      # - "traefik.http.routers.seafile-rtr.middlewares=chain-basic-auth@file"
+      ## note: Google OAuth Authentication
+      # - "traefik.http.routers.seafile-rtr.middlewares=chain-oauth@file"
+      ## note: Authelia Authentication
+      # - "traefik.http.routers.seafile-rtr.middlewares=chain-authelia@file"
+
+      ## note: HTTP Services Section
+      - "traefik.http.routers.seafile-rtr.service=seafile-svc"
+      - "traefik.http.services.seafile-svc.loadbalancer.server.port=80"

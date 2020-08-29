@@ -1,0 +1,29 @@
+
+########################### SEAFILE VARIABLES ###########################
+
+
+### TIMEZONE USED BY CONTAINER
+TZ="<TZ>"
+
+
+### FILEPATH FOR DATA & CONFIG USED BY CONTAINERS
+DATDIR="/home/<USERNAME>/docker/data"
+
+
+### DOMAIN NAME CONFIGURATION
+DOMAINNAME=<DOMAINNAME>
+
+
+### MARIADB CONFIGURATION
+DB_HOST=mariadb
+DB_ROOT_PASSWD=<MYSQL_ROOT_PASSWORD>
+
+
+### CONTAINER SEAFILE CONFIGURATION
+SEAFILE_ADMIN_EMAIL=<EMAIL>                     # Specifies Seafile admin user, default is 'me@example.com'.
+SEAFILE_ADMIN_PASSWORD=<PASSWORD>               # Specifies Seafile admin password, default is 'asecret'.
+SEAFILE_SERVER_LETSENCRYPT=<LETSENCRYPT>        # Whether to use https or not.
+SEAFILE_SERVER_HOSTNAME=<HOSTNAME>              # Specifies your host name if https is enabled.
+
+
+
