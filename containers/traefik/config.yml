@@ -1,0 +1,184 @@
+http:
+ #region routers
+  routers:
+    authelia:
+      entryPoints:
+        - "https"
+      rule: "Host(`authelia.example.me`)"
+      middlewares:
+        - default-headers
+      tls: {}
+      service: authelia
+
+    bookstack:
+      entryPoints:
+        - "https"
+      rule: "Host(`wiki.example.me`)"
+      middlewares:
+        - default-headers
+      tls: {}
+      service: bookstack
+
+    cadvisor:
+      entryPoints:
+        - "https"
+      rule: "Host(`cadvisor.example.me`)"
+      middlewares:
+        - authelia
+        - default-headers
+      tls: {}
+      service: cadvisor
+
+    guacamole:
+      entryPoints:
+        - "https"
+      rule: "Host(`guacamole.example.me`)"
+      middlewares:
+        - authelia
+        - default-headers
+      tls: {}
+      service: guacamole
+
+    nextcloud:
+      entryPoints:
+        - "https"
+      rule: "Host(`nxt.example.me`)"
+      middlewares:
+        - default-headers
+      tls: {}
+      service: nextcloud
+
+    organizr:
+      entryPoints:
+        - "https"
+      rule: "Host(`organizr.example.me`)"
+      middlewares:
+        - authelia
+        - default-headers
+      tls: {}
+      service: organizr
+
+    portainer:
+      entryPoints:
+        - "https"
+      rule: "Host(`portainer.example.me`)"
+      middlewares:
+        - authelia
+        - default-headers
+      tls: {}
+      service: portainer
+
+    webtop:
+      entryPoints:
+        - "https"
+      rule: "Host(`webtop.example.me`)"
+      middlewares:
+        - authelia
+        - default-headers
+      tls: {}
+      service: webtop
+
+    yacht:
+      entryPoints:
+        - "https"
+      rule: "Host(`yacht.example.me`)"
+      middlewares:
+        - authelia
+        - default-headers
+      tls: {}
+      service: yacht
+
+#endregion
+#region services
+  services:
+
+    authelia:
+      loadBalancer:
+        servers:
+          - url: "http://10.20.1.121:9091"
+        passHostHeader: true
+
+    bookstack:
+      loadBalancer:
+        servers:
+          - url: "http://10.20.1.121:80"
+        passHostHeader: true
+
+    cadvisor:
+      loadBalancer:
+        servers:
+          - url: "http://10.20.1.121:8090"
+        passHostHeader: true
+
+    guacamole:
+      loadBalancer:
+        servers:
+          - url: "http://10.20.1.121:8080"
+        passHostHeader: true
+
+    nextcloud:
+      loadBalancer:
+        servers:
+          - url: "http://10.20.1.121:80"
+        passHostHeader: true
+
+    organizr:
+      loadBalancer:
+        servers:
+          - url: "http://10.20.1.121:80"
+        passHostHeader: true
+
+    portainer:
+      loadBalancer:
+        servers:
+          - url: "http://10.20.1.121:9000"
+        passHostHeader: true
+
+    webtop:
+      loadBalancer:
+        servers:
+          - url: "http://10.20.1.121:3000"
+        passHostHeader: true
+
+    yacht:
+      loadBalancer:
+        servers:
+          - url: "http://10.20.1.121:8000"
+        passHostHeader: true
+
+#endregion
+  middlewares:
+    https-redirect:
+      redirectScheme:
+        scheme: https
+
+    authelia:
+      forwardAuth:
+        address: "http://authelia:9091/api/verify?rd=https://authelia.example.me"
+
+    default-headers:
+      headers:
+        frameDeny: true
+        sslRedirect: true
+        browserXssFilter: true
+        contentTypeNosniff: true
+        forceSTSHeader: true
+        stsIncludeSubdomains: true
+        stsPreload: true
+        stsSeconds: 15552000
+        customFrameOptionsValue: SAMEORIGIN
+        customRequestHeaders:
+          X-Forwarded-Proto: https
+
+    default-whitelist:
+      ipWhiteList:
+        sourceRange:
+        - "10.0.0.0/8"
+        - "192.168.0.0/16"
+        - "172.16.0.0/12"
+
+    secured:
+      chain:
+        middlewares:
+        - default-whitelist
+        - default-headers
